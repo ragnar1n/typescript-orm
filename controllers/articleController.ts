@@ -1,6 +1,7 @@
 import { Request, Response, Router } from "express";
 import Article from "../models/article";
 import Comment from "../models/comment";
+import comment from "../models/comment";
 
 const router: Router = Router();
 

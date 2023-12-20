@@ -4,6 +4,7 @@ import bodyParser from "body-parser";
 import mongoose from "mongoose";
 import articleController from "./controllers/articleController";
 import commentController from "./controllers/commentController";
+import authorController from "./controllers/authorController";
 
 mongoose.connect("mongodb+srv://user:qwerty12345@cluster0.wcfnftq.mongodb.net/test");
 const database = mongoose.connection;
@@ -28,6 +29,7 @@ app.get('/', (req: Request, res: Response) => {
 });
 app.use('/', articleController)
 app.use('/', commentController)
+app.use('/', authorController)
 
 app.listen(3000,() => {
     console.log(`[server]: Server is running at http://localhost:3000`);
