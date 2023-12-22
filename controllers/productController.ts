@@ -26,7 +26,7 @@ router.post('/product', async (req: Request, res: Response) => {
 
 router.get('/product', async (req: Request, res: Response) => {
     try{
-        const data = await Product.find();
+        const data = await Product.find().populate('category');
         res.json(data)
     }
     catch(error){
@@ -36,7 +36,7 @@ router.get('/product', async (req: Request, res: Response) => {
 
 router.get('/product/:id', async (req: Request, res: Response) => {
     try{
-        const data = await Product.findById(req.params.id);
+        const data = await Product.findById(req.params.id).populate('category');
         res.json(data)
     }
     catch(error){

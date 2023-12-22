@@ -21,7 +21,7 @@ router.post('/cartproduct', async (req: Request, res: Response) => {
 
 router.get('/cartproduct', async (req: Request, res: Response) => {
     try{
-        const data = await CartProduct.find();
+        const data = await CartProduct.find().populate('product');
         res.json(data)
     }
     catch(error){
@@ -31,7 +31,7 @@ router.get('/cartproduct', async (req: Request, res: Response) => {
 
 router.get('/cartproduct/:id', async (req: Request, res: Response) => {
     try{
-        const data = await CartProduct.findById(req.params.id);
+        const data = await CartProduct.findById(req.params.id).populate('product');
         res.json(data)
     }
     catch(error){

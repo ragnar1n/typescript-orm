@@ -1,5 +1,6 @@
 import { Request, Response, Router } from "express";
 import Order from "../models/order";
+import CartProduct from "../models/cartProduct";
 
 
 const router: Router = Router();
@@ -24,7 +25,7 @@ router.post('/order', async (req: Request, res: Response) => {
 
 router.get('/order', async (req: Request, res: Response) => {
     try{
-        const data = await Order.find();
+        const data = await Order.find().populate('orderer');
         res.json(data)
     }
     catch(error){
@@ -34,7 +35,7 @@ router.get('/order', async (req: Request, res: Response) => {
 
 router.get('/order/:id', async (req: Request, res: Response) => {
     try{
-        const data = await Order.findById(req.params.id);
+        const data = await Order.findById(req.params.id).populate("products").populate("orderer");
         res.json(data)
     }
     catch(error){
@@ -65,6 +66,34 @@ router.put('/order/:id', async (req: Request, res: Response) => {
         )
 
         res.send(result)
+    }
+    catch(error){
+        res.status(500).json({message: error})
+    }
+})
+
+router.post('/order/:id/cartproduct', async (req: Request, res: Response) => {
+    try{
+        const id = req.params.id;
+        const options = { new: true };
+
+        const data = new CartProduct({
+            product: req.body.product,
+            quantity: req.body.quantity
+        })
+
+        const item = await data.save()
+
+        const result = await Order.findByIdAndUpdate(
+            { _id: id },
+            { $push: {
+                    products: item._id
+                }
+            }, options
+        )
+
+        res.send(result)
+
     }
     catch(error){
         res.status(500).json({message: error})
