@@ -5,6 +5,11 @@ import mongoose from "mongoose";
 import articleController from "./controllers/articleController";
 import commentController from "./controllers/commentController";
 import authorController from "./controllers/authorController";
+import productController from "./controllers/productController";
+import categoryController from "./controllers/categoryController";
+import cartProductController from "./controllers/cartProductController";
+import userController from "./controllers/userController";
+import orderController from "./controllers/orderController";
 
 mongoose.connect("mongodb+srv://user:qwerty12345@cluster0.wcfnftq.mongodb.net/test");
 const database = mongoose.connection;
@@ -30,6 +35,11 @@ app.get('/', (req: Request, res: Response) => {
 app.use('/', articleController)
 app.use('/', commentController)
 app.use('/', authorController)
+app.use('/', productController)
+app.use('/', categoryController)
+app.use('/', cartProductController)
+app.use('/', userController)
+app.use('/', orderController)
 
 app.listen(3000,() => {
     console.log(`[server]: Server is running at http://localhost:3000`);
